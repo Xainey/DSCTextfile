@@ -1,0 +1,35 @@
+---
+driver:
+  name: vagrant
+  linked_clones: true
+  gui: false
+  communicator: winrm
+  customize:
+    cpus: 1
+    memory: 4096
+
+provisioner:
+  name: dsc
+  dsc_local_configuration_manager_version: wmf5  
+  modules_path: .
+  configuration_script_folder: Examples
+  configuration_script: TextFile_Example.ps1
+  configuration_data_variable: configData
+  configuration_name: TextFile  
+
+transport:
+  name: winrm
+
+verifier:
+  name: pester
+  test_folder: Tests
+
+platforms:
+  - name: windows-2012r2-wmf5
+    driver:
+      box: Windows2012R2WMF5
+    provisioner:
+      dsc_local_configuration_manager_version: wmf5
+
+suites:
+  - name: TextFile
